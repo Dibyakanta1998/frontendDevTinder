@@ -9,8 +9,9 @@ import { addUser } from "../utils/userSlice";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [emailId, setEmailId] = useState("dibyakanta9937@gmail.com");
+  const [emailId, setEmailId] = useState("abhishek9937@gmail.com");
   const [password, setPassword] = useState("Abc@1234");
+  const [error, setError] = useState(null);
 
   const handleLogin = async () => {
     try {
@@ -26,9 +27,9 @@ const Login = () => {
       );
       dispatch(addUser(res.data));
 
-      navigate("/feed");
+      navigate("/");
     } catch (error) {
-      console.log(">>>>err", error.message);
+      setError(error.response?.data || "Something went wrong");
     }
   };
 
@@ -60,6 +61,7 @@ const Login = () => {
               />
             </fieldset>
           </div>
+          {error && <p className="text-red-500">Error: {error}</p>}
           <div className="card-actions justify-center">
             <button className="btn btn-primary" onClick={handleLogin}>
               Login
