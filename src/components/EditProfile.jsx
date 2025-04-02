@@ -1,23 +1,21 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
 import UserCard from "./UserCard";
 
-const EditProfile = () => {
-  const user = useSelector((store) => store.user);
-
+const EditProfile = ({ user }) => {
   const [showToast, setShowToast] = useState(false);
 
-  const [firstName, setFirstName] = useState(user?.firstName);
-  const [lastName, setLastName] = useState(user?.lastName);
-  const [photoUrl, setPhotoUrl] = useState(user?.photoUrl);
+  const [firstName, setFirstName] = useState(user?.firstName || "");
+  const [lastName, setLastName] = useState(user?.lastName || "");
+  const [photoUrl, setPhotoUrl] = useState(user?.photoUrl || "");
 
-  const [age, setAge] = useState(user?.age);
-  const [gender, setGender] = useState(user?.age);
-  const [about, setAbout] = useState(user?.about);
+  const [age, setAge] = useState(user?.age || "");
+  const [gender, setGender] = useState(user?.gender || "");
+  const [about, setAbout] = useState(user?.about || "");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
 
