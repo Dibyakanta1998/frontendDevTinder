@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { MessageCircleIcon } from "lucide-react";
 
 import { BASE_URL } from "../utils/constants";
 import { addConnections } from "../utils/connectionSlice";
+
 
 const Connections = () => {
   const dispatch = useDispatch();
@@ -33,38 +36,41 @@ const Connections = () => {
     );
 
   return (
-    <div className="text-center my-10">
-      <h1 className="text-3xl font-bold">Connections</h1>
-      {connections.map((value) => {
-        const { _id, firstName, lastName, about, age, gender, photoUrl } =
-          value;
-        return (
-          <div
-            key={_id}
-            className=" flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto"
-          >
-            <div>
-              <img
-                alt="photo"
-                className="w-20 h-20 rounded-full"
-                src={photoUrl}
-              />
-            </div>
-            <div className="text-left mx-4">
-              <h2 className="font-bold text-xl">
-                {firstName} {lastName}
-              </h2>
-              {age && gender && (
-                <p>
-                  {age} , {gender}
-                </p>
-              )}
+    <div className=" my-10">
+      <ul className="list bg-base-300 rounded-box shadow-md w-1/2 mx-auto">
+        <li className="p-4 pb-2 text-3xl font-bold opacity-60 tracking-wide">
+          Connections
+        </li>
+        {connections.map((value) => {
+          const { _id, firstName, lastName, about, age, gender, photoUrl } =
+            value;
+          return (
+            <li className="list-row" key={_id}>
+              <div>
+                <img className="size-10 rounded-box" src={photoUrl} />
+              </div>
+              <div>
+                <div>
+                  {firstName} {lastName}
+                </div>
 
-              <p>{about}</p>
-            </div>
-          </div>
-        );
-      })}
+                {
+                  <div className="text-xs uppercase font-semibold opacity-60">
+                    {age}, {gender}
+                  </div>
+                }
+              </div>
+              <p className="list-col-wrap text-xs">{about}</p>
+
+              <Link to={"/chat/" + _id}>
+                <button className="btn btn-square btn-ghost">
+                  <MessageCircleIcon />
+                </button>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };
